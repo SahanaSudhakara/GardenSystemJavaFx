@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.garden.UserInterfaceController">
+    <spacing>10</spacing>
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <GridPane fx:id="gardenGrid" GridPane.hgrow="ALWAYS" style="-fx-border-color: #4682B4; -fx-border-width: 2;">
+        <!-- Grid content will be updated programmatically -->
+    </GridPane>
+
+    <TitledPane text="Day Logs">
+        <content>
+            <ListView fx:id="dayLogList"/>
+        </content>
+    </TitledPane>
+    <TitledPane text="Watering Logs">
+        <content>
+            <ListView fx:id="wateringLogList"/>
+        </content>
+    </TitledPane>
+    <TitledPane text="Heating Logs">
+        <content>
+            <ListView fx:id="heatingLogList"/>
+        </content>
+    </TitledPane>
+    <TitledPane text="Insect Attack Logs">
+        <content>
+            <ListView fx:id="insectLogList"/>
+        </content>
+    </TitledPane>
+    <TitledPane text="Cleaner Logs">
+        <content>
+            <ListView fx:id="cleanerLogList"/>
+        </content>
+    </TitledPane>
+
+    <HBox spacing="10">
+        <VBox spacing="10">
+            <Label text="Weather Report" style="-fx-font-weight: bold;"/>
+            <ImageView fx:id="weatherImageView" fitWidth="100" fitHeight="100"/>
+            <Label fx:id="weatherLabel"/>
+        </VBox>
+        <VBox spacing="10">
+            <Label text="Garden Directory" style="-fx-font-weight: bold;"/>
+            <ListView fx:id="directoryListView"/>
+        </VBox>
+        <VBox spacing="10">
+            <Label text="Plant Details" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="plantTable">
+                <columns>
+                    <TableColumn text="Plant"/>
+                    <TableColumn text="Count"/>
+                    <TableColumn text="Lifespan"/>
+                    <TableColumn text="Pest Attacks"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </HBox>
+
+    <Button text="Simulate Day" onAction="#handleSimulateDay"/>
+    <Button text="Rain" onAction="#handleRain"/>
+    <Button text="Temperature" onAction="#handleTemperature"/>
+    <Button text="Parasite" onAction="#handleParasite"/>
+    <Button text="Get State" onAction="#handleGetState"/>
+    <Label fx:id="gameOverLabel" style="-fx-text-fill: red; -fx-font-weight: bold;"/>
+</VBox>
