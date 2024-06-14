@@ -1,25 +1,31 @@
-package com.garden;
+package com.garden.Controller;
+
+import com.garden.Helpers.HeatingSystem;
+import com.garden.Logger;
+import com.garden.Model.Insect;
+import com.garden.Model.Plant;
+import com.garden.Helpers.WateringSystem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class Garden {
+public class GardenController {
     private List<Plant> plants;
     private List<Insect> insects;
     private WateringSystem wateringSystem;
     private HeatingSystem heatingSystem;
     private PestControl pestControl;
-    private WeatherSimulator weatherSimulator;
     private Logger logger;
     private int dayCount;
+    private static final String[] WEATHER_TYPES = {"Sunny", "Rainy", "Cold"};
 
-    public Garden() {
+    public GardenController() {
         plants = new ArrayList<>();
         insects = new ArrayList<>();
         wateringSystem = new WateringSystem();
         heatingSystem = new HeatingSystem();
         pestControl = new PestControl();
-        weatherSimulator = new WeatherSimulator();
         logger = new Logger();
         dayCount = 0;
     }
@@ -32,7 +38,7 @@ public class Garden {
     public void simulateDay() {
         dayCount++;
         logger.addDayLogEntry("Day " + dayCount + " simulation started.");
-        String weather = weatherSimulator.getCurrentWeather();
+        String weather =getCurrentWeather();
         logger.addDayLogEntry("Weather: " + weather);
 
         for (Plant plant : plants) {
@@ -80,6 +86,10 @@ public class Garden {
     }
     public int getDay() {
         return dayCount;
+    }
+    public String getCurrentWeather() {
+        Random random = new Random();
+        return WEATHER_TYPES[random.nextInt(WEATHER_TYPES.length)];
     }
 
 }

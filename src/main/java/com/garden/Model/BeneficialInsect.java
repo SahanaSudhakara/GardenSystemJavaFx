@@ -1,4 +1,4 @@
-package com.garden;
+package com.garden.Model;
 
 public class BeneficialInsect extends Insect {
     public BeneficialInsect(String name, int row, int col) {

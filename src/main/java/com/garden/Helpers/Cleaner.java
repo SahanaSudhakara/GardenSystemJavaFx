@@ -1,4 +1,6 @@
-package com.garden;
+package com.garden.Helpers;
+
+import com.garden.Model.Plant;
 
 public class Cleaner {
     private boolean busy;

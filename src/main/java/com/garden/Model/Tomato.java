@@ -1,4 +1,6 @@
-package com.garden;
+package com.garden.Model;
+
+import com.garden.Model.Plant;
 
 public class Tomato extends Plant {
     public Tomato(int row, int col) {

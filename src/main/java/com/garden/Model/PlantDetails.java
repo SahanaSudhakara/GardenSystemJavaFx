@@ -1,5 +1,5 @@
 
-package com.garden;
+package com.garden.Model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

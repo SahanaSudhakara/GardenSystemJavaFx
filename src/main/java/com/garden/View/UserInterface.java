@@ -1,5 +1,9 @@
-package com.garden;
+package com.garden.View;
 
+import com.garden.Helpers.Cleaner;
+import com.garden.Controller.GardenController;
+import com.garden.Model.*;
+import com.garden.Controller.PestControl;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -20,39 +24,30 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Random;
 
-public class UserInterface extends Application {
-
-    private GardenApi gardenApi;
-    private Garden garden;
-    private GridPane gardenGrid;
-    private ListView<TextFlow> dayLogList;
-    private ListView<TextFlow> wateringLogList;
-    private ListView<TextFlow> heatingLogList;
-    private ListView<TextFlow> insectLogList;
-    private ListView<TextFlow> cleanerLogList;
-    private Random random;
-    private ImageView weatherImageView;
-
-    private ImageView temperatureImageView;
-    private Label temperatureLabel;
-
-    private ImageView waterControlImageView;
-    private  Label waterControlPercentage;
-    private Label weatherLabel;
-    private ListView<String> directoryListView;
-    private Timeline simulationTimeline;
-    private PestControl pestControl;
-    private TableView<PlantDetails> plantTable;
-    private String currentWeather;
-    private ProgressBar waterProgressBar;
-    private Label waterProgressLabel;
-    private ProgressBar temperatureProgressBar;
-    private Label temperatureProgressLabel;
+public class UserInterface extends Application{
+    protected GridPane gardenGrid;
+    protected ListView<TextFlow> dayLogList;
+    protected ListView<TextFlow> wateringLogList;
+    protected ListView<TextFlow> heatingLogList;
+    protected ListView<TextFlow> insectLogList;
+    protected ListView<TextFlow> cleanerLogList;
+    protected Random random;
+    protected ImageView weatherImageView;
+    protected Label weatherLabel;
+    protected ListView<String> directoryListView;
+    protected Timeline simulationTimeline;
+    protected PestControl pestControl;
+    protected TableView<PlantDetails> plantTable;
+    protected String currentWeather;
+    protected ProgressBar waterProgressBar;
+    protected Label waterProgressLabel;
+    protected ProgressBar temperatureProgressBar;
+    protected Label temperatureProgressLabel;
+    private GardenController gardenController;
 
     @Override
     public void start(Stage primaryStage) {
-        garden = new Garden();
-        gardenApi = new GardenApi();
+        gardenController = new GardenController();
         pestControl = new PestControl();
         random = new Random();
 
@@ -223,11 +218,10 @@ public class UserInterface extends Application {
 
         Image weatherImage = getImage(selectedWeather);
         weatherImageView.setImage(weatherImage);
-        weatherLabel.setText("Day " + (garden.getDay()) + ": " + currentWeather);
+        weatherLabel.setText("Day " + (gardenController.getDay()) + ": " + currentWeather);
 
         int temperature = getTemperatureForDay(currentWeather);
-        gardenApi.temperature(temperature);
-        temperatureProgressLabel.setText(gardenApi.getCurrentTemperature() + " F");
+        temperatureProgressLabel.setText(temperature + " F");
         temperatureProgressLabel.setStyle(getLabelFontForWeather(currentWeather));
 
         waterProgressLabel.setText(getWaterLevelStringForLabelFontForWeather(currentWeather));
@@ -267,25 +261,25 @@ public class UserInterface extends Application {
     private void updateDirectory() {
         directoryListView.getItems().clear();
         directoryListView.getItems().add("Plants:");
-        directoryListView.getItems().add("  - Tomato: " + garden.getPlants().stream().filter(p -> p.getName().equals("Tomato")).count());
-        directoryListView.getItems().add("  - Orange: " + garden.getPlants().stream().filter(p -> p.getName().equals("Orange")).count());
-        directoryListView.getItems().add("  - Sunflower: " + garden.getPlants().stream().filter(p -> p.getName().equals("Sunflower")).count());
+        directoryListView.getItems().add("  - Tomato: " + gardenController.getPlants().stream().filter(p -> p.getName().equals("Tomato")).count());
+        directoryListView.getItems().add("  - Orange: " + gardenController.getPlants().stream().filter(p -> p.getName().equals("Orange")).count());
+        directoryListView.getItems().add("  - Sunflower: " + gardenController.getPlants().stream().filter(p -> p.getName().equals("Sunflower")).count());
         directoryListView.getItems().add("Good Insects:");
-        directoryListView.getItems().add("  - Beetle: " + garden.getInsects().stream().filter(i -> i.getName().equals("Beetle")).count());
-        directoryListView.getItems().add("  - Butterfly: " + garden.getInsects().stream().filter(i -> i.getName().equals("Butterfly")).count());
+        directoryListView.getItems().add("  - Beetle: " + gardenController.getInsects().stream().filter(i -> i.getName().equals("Beetle")).count());
+        directoryListView.getItems().add("  - Butterfly: " + gardenController.getInsects().stream().filter(i -> i.getName().equals("Butterfly")).count());
         directoryListView.getItems().add("Pests:");
-        directoryListView.getItems().add("  - Spider: " + garden.getInsects().stream().filter(i -> i.getName().equals("Spider")).count());
-        directoryListView.getItems().add("  - Caterpillar: " + garden.getInsects().stream().filter(i -> i.getName().equals("Caterpillar")).count());
+        directoryListView.getItems().add("  - Spider: " + gardenController.getInsects().stream().filter(i -> i.getName().equals("Spider")).count());
+        directoryListView.getItems().add("  - Caterpillar: " + gardenController.getInsects().stream().filter(i -> i.getName().equals("Caterpillar")).count());
         directoryListView.getItems().add("Cleaners:");
         directoryListView.getItems().add("  - Available: " + pestControl.getCleaners().stream().filter(c -> !c.isBusy()).count());
         directoryListView.getItems().add("  - Busy: " + pestControl.getCleaners().stream().filter(Cleaner::isBusy).count());
 
         // Update Plant Table
         plantTable.getItems().clear();
-        for (Plant plant : garden.getPlants()) {
+        for (Plant plant : gardenController.getPlants()) {
             PlantDetails details = new PlantDetails(
                     plant.getName(),
-                    (int) garden.getPlants().stream().filter(p -> p.getName().equals(plant.getName())).count(),
+                    (int) gardenController.getPlants().stream().filter(p -> p.getName().equals(plant.getName())).count(),
                     plant.getDaysToLive(),
                     plant.getPestAttacks()
             );
@@ -337,7 +331,7 @@ public class UserInterface extends Application {
                 plant = new Sunflower(row, col);
             }
             if (plant != null) {
-                garden.addPlant(plant);
+                gardenController.addPlant(plant);
                 animatePlant(plant);
                 updateGardenGrid();
                 updateLog();
@@ -392,7 +386,7 @@ public class UserInterface extends Application {
             }
         }
 
-        for (Plant plant : garden.getPlants()) {
+        for (Plant plant : gardenController.getPlants()) {
             StackPane cell = (StackPane) getNodeByRowColumnIndex(plant.getRow(), plant.getCol(), gardenGrid);
             if (!plant.isDead()) {
                 ImageView plantImage = getImageView(plant.getName().toLowerCase() + ".png");
@@ -413,7 +407,7 @@ public class UserInterface extends Application {
             }
         }
 
-        for (Insect insect : garden.getInsects()) {
+        for (Insect insect : gardenController.getInsects()) {
             StackPane cell = (StackPane) getNodeByRowColumnIndex(insect.getRow(), insect.getCol(), gardenGrid);
             if (cell.getChildren().size() < 2) { // Ensure only one insect at a time
                 ImageView insectImage = getImageView(insect.getName().toLowerCase() + ".gif");
@@ -481,11 +475,11 @@ public class UserInterface extends Application {
         insectLogList.getItems().clear();
         cleanerLogList.getItems().clear();
 
-        addLogEntries(dayLogList, garden.getLogger().getDayLogEntries(), Color.BLUE);
-        addLogEntries(wateringLogList, garden.getLogger().getWateringLogEntries(), Color.GREEN);
-        addLogEntries(heatingLogList, garden.getLogger().getHeatingLogEntries(), Color.ORANGE);
-        addLogEntries(insectLogList, garden.getLogger().getInsectLogEntries(), Color.RED);
-        addLogEntries(cleanerLogList, garden.getLogger().getCleanerLogEntries(), Color.PURPLE);
+        addLogEntries(dayLogList, gardenController.getLogger().getDayLogEntries(), Color.BLUE);
+        addLogEntries(wateringLogList, gardenController.getLogger().getWateringLogEntries(), Color.GREEN);
+        addLogEntries(heatingLogList, gardenController.getLogger().getHeatingLogEntries(), Color.ORANGE);
+        addLogEntries(insectLogList, gardenController.getLogger().getInsectLogEntries(), Color.RED);
+        addLogEntries(cleanerLogList, gardenController.getLogger().getCleanerLogEntries(), Color.PURPLE);
     }
 
     private void addLogEntries(ListView<TextFlow> logList, List<String> logEntries, Color color) {
@@ -505,19 +499,19 @@ public class UserInterface extends Application {
     }
 
     private void simulateDay() {
-        garden.simulateDay();
-        pestControl.managePests(garden.getPlants(), garden.getInsects(), garden.getLogger(), garden.getDay());
+        gardenController.simulateDay();
+        pestControl.managePests(gardenController.getPlants(), gardenController.getInsects(), gardenController.getLogger(), gardenController.getDay());
         updateLog();
         updateGardenGrid();
         updateWeatherImage();
         updateDirectory();
         //increaseProgress();
 
-        for (Plant plant : garden.getPlants()) {
+        for (Plant plant : gardenController.getPlants()) {
             plant.adjustLifespanForWeather(currentWeather);
         }
 
-        if (garden.getPlants().stream().allMatch(Plant::isDead)) {
+        if (gardenController.getPlants().stream().allMatch(Plant::isDead)) {
             simulationTimeline.stop();
             showPopup("All plants have died. Plant more to continue.");
         }
@@ -591,8 +585,5 @@ public class UserInterface extends Application {
             waterProgressLabel.setText("Water Level: 100%");
             waterProgressLabel.setTextFill(Color.RED);
         }
-    }
-    public static void main(String[] args) {
-        launch(args);
     }
 }

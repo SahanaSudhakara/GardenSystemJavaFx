@@ -1,4 +1,6 @@
-package com.garden;
+package com.garden.Model;
+
+import com.garden.Model.Insect;
 
 public class Pest extends Insect {
     public Pest(String name, int row, int col) {

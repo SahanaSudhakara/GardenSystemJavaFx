@@ -1,4 +1,4 @@
-package com.garden;
+package com.garden.Model;
 
 public abstract class Plant {
     private String name;

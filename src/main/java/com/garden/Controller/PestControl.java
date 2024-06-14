@@ -1,4 +1,11 @@
-package com.garden;
+package com.garden.Controller;
+
+import com.garden.Helpers.Cleaner;
+import com.garden.Logger;
+import com.garden.Model.BeneficialInsect;
+import com.garden.Model.Insect;
+import com.garden.Model.Pest;
+import com.garden.Model.Plant;
 
 import java.util.List;
 import java.util.Random;
