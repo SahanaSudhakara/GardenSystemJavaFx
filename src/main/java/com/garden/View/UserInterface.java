@@ -538,10 +538,16 @@ public class UserInterface extends Application{
 
 
     private void startSimulation() {
-        simulationTimeline = new Timeline(new KeyFrame(Duration.seconds(4), e -> simulateDay()));
+        if (gardenController.getDay() == 0) {
+            // Start simulation immediately on day 1
+            simulateDay();
+        }
+        simulationTimeline = new Timeline(new KeyFrame(Duration.hours(1), e -> simulateDay()));
+        //simulationTimeline = new Timeline(new KeyFrame(Duration.seconds(4), e -> simulateDay()));
         simulationTimeline.setCycleCount(Timeline.INDEFINITE);
         simulationTimeline.play();
     }
+
 
     private void simulateDay() {
         gardenController.simulateDay();

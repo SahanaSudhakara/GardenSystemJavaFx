@@ -1,0 +1,107 @@
+Day Log: Added plant: Orange at (3,4)
+Day Log: Added plant: Orange at (1,8)
+Day Log: Added plant: Orange at (5,0)
+Day Log: Added plant: Orange at (0,4)
+Day Log: Added plant: Orange at (7,1)
+Day Log: Day 1 simulation started.
+Day Log: Weather: Rainy
+Watering Log: Day 1: Watering plant: Orange at (3,4) with 10 units of water (rainy day)
+Watering Log: Day 1: Watering plant: Orange at (1,8) with 10 units of water (rainy day)
+Watering Log: Day 1: Watering plant: Orange at (5,0) with 10 units of water (rainy day)
+Watering Log: Day 1: Watering plant: Orange at (0,4) with 10 units of water (rainy day)
+Watering Log: Day 1: Watering plant: Orange at (7,1) with 10 units of water (rainy day)
+Insect Log: Day 1: Pest attack by Caterpillar on plant: Orange at grid (3,4)
+Insect Log: Day 1: Beneficial insect Beetle found near plant: Orange at grid (1,8)
+Insect Log: Day 1: Beneficial insect Beetle found near plant: Orange at grid (5,0)
+Insect Log: Day 1: Beneficial insect Butterfly found near plant: Orange at grid (0,4)
+Insect Log: Day 1: Pest attack by Caterpillar on plant: Orange at grid (7,1)
+Day Log: Day 1 simulation completed.
+Day Log: Day 2 simulation started.
+Day Log: Weather: Cold
+Heating Log: Day 2: Heating plant: Orange at (3,4)
+Watering Log: Day 2: Watering plant: Orange at (3,4) with 20 units of water
+Heating Log: Day 2: Heating plant: Orange at (1,8)
+Watering Log: Day 2: Watering plant: Orange at (1,8) with 20 units of water
+Heating Log: Day 2: Heating plant: Orange at (5,0)
+Watering Log: Day 2: Watering plant: Orange at (5,0) with 20 units of water
+Heating Log: Day 2: Heating plant: Orange at (0,4)
+Watering Log: Day 2: Watering plant: Orange at (0,4) with 20 units of water
+Heating Log: Day 2: Heating plant: Orange at (7,1)
+Watering Log: Day 2: Watering plant: Orange at (7,1) with 20 units of water
+Insect Log: Day 2: Beneficial insect Beetle found near plant: Orange at grid (3,4)
+Insect Log: Day 2: Pest attack by Caterpillar on plant: Orange at grid (1,8)
+Insect Log: Day 2: Beneficial insect Butterfly found near plant: Orange at grid (5,0)
+Insect Log: Day 2: Pest attack by Spider on plant: Orange at grid (0,4)
+Insect Log: Day 2: Beneficial insect Beetle found near plant: Orange at grid (7,1)
+Day Log: Day 2 simulation completed.
+Day Log: Day 3 simulation started.
+Day Log: Weather: Sunny
+Heating Log: Day 3: Cooling plant: Orange at (3,4) (sunny day)
+Watering Log: Day 3: Watering plant: Orange at (3,4) with 20 units of water (sunny day)
+Heating Log: Day 3: Cooling plant: Orange at (1,8) (sunny day)
+Watering Log: Day 3: Watering plant: Orange at (1,8) with 20 units of water (sunny day)
+Heating Log: Day 3: Cooling plant: Orange at (5,0) (sunny day)
+Watering Log: Day 3: Watering plant: Orange at (5,0) with 20 units of water (sunny day)
+Heating Log: Day 3: Cooling plant: Orange at (0,4) (sunny day)
+Watering Log: Day 3: Watering plant: Orange at (0,4) with 20 units of water (sunny day)
+Heating Log: Day 3: Cooling plant: Orange at (7,1) (sunny day)
+Watering Log: Day 3: Watering plant: Orange at (7,1) with 20 units of water (sunny day)
+Insect Log: Day 3: Beneficial insect Beetle found near plant: Orange at grid (3,4)
+Insect Log: Day 3: Pest attack by Spider on plant: Orange at grid (1,8)
+Insect Log: Day 3: Pest attack by Spider on plant: Orange at grid (5,0)
+Insect Log: Day 3: Pest attack by Caterpillar on plant: Orange at grid (0,4)
+Insect Log: Day 3: Pest attack by Spider on plant: Orange at grid (7,1)
+Day Log: Day 3 simulation completed.
+Day Log: Added plant: Orange at (1,7)
+Day Log: Added plant: Orange at (7,7)
+Day Log: Added plant: Orange at (5,8)
+Day Log: Added plant: Orange at (3,2)
+Day Log: Added plant: Orange at (4,6)
+Day Log: Added plant: Orange at (0,7)
+Day Log: Added plant: Orange at (7,0)
+Day Log: Added plant: Orange at (1,1)
+Day Log: Day 1 simulation started.
+Day Log: Weather: Rainy
+Watering Log: Day 1: Watering plant: Orange at (0,7) with 10 units of water (rainy day)
+Watering Log: Day 1: Watering plant: Orange at (7,0) with 10 units of water (rainy day)
+Watering Log: Day 1: Watering plant: Orange at (1,1) with 10 units of water (rainy day)
+Insect Log: Day 1: Beneficial insect Butterfly found near plant: Orange at grid (0,7)
+Insect Log: Day 1: Pest attack by Caterpillar on plant: Orange at grid (7,0)
+Insect Log: Day 1: Pest attack by Caterpillar on plant: Orange at grid (1,1)
+Day Log: Day 1 simulation completed.
+Day Log: Added plant: Orange at (6,0)
+Day Log: Added plant: Orange at (4,1)
+Day Log: Added plant: Orange at (0,4)
+Day Log: Day 1 simulation started.
+Day Log: Weather: Cold
+Heating Log: Day 1: Heating plant: Orange at (6,0)
+Watering Log: Day 1: Watering plant: Orange at (6,0) with 20 units of water
+Heating Log: Day 1: Heating plant: Orange at (4,1)
+Watering Log: Day 1: Watering plant: Orange at (4,1) with 20 units of water
+Heating Log: Day 1: Heating plant: Orange at (0,4)
+Watering Log: Day 1: Watering plant: Orange at (0,4) with 20 units of water
+Insect Log: Day 1: Pest attack by Caterpillar on plant: Orange at grid (6,0)
+Insect Log: Day 1: Beneficial insect Beetle found near plant: Orange at grid (4,1)
+Insect Log: Day 1: Pest attack by Caterpillar on plant: Orange at grid (0,4)
+Day Log: Day 1 simulation completed.
+Day Log: Day 2 simulation started.
+Day Log: Weather: Cold
+Heating Log: Day 2: Heating plant: Orange at (6,0)
+Watering Log: Day 2: Watering plant: Orange at (6,0) with 20 units of water
+Heating Log: Day 2: Heating plant: Orange at (4,1)
+Watering Log: Day 2: Watering plant: Orange at (4,1) with 20 units of water
+Heating Log: Day 2: Heating plant: Orange at (0,4)
+Watering Log: Day 2: Watering plant: Orange at (0,4) with 20 units of water
+Insect Log: Day 2: Beneficial insect Beetle found near plant: Orange at grid (6,0)
+Insect Log: Day 2: Pest attack by Caterpillar on plant: Orange at grid (4,1)
+Insect Log: Day 2: Beneficial insect Beetle found near plant: Orange at grid (0,4)
+Day Log: Day 2 simulation completed.
+Day Log: Day 3 simulation started.
+Day Log: Weather: Rainy
+Watering Log: Day 3: Watering plant: Orange at (6,0) with 10 units of water (rainy day)
+Watering Log: Day 3: Watering plant: Orange at (4,1) with 10 units of water (rainy day)
+Watering Log: Day 3: Watering plant: Orange at (0,4) with 10 units of water (rainy day)
+Insect Log: Day 3: Pest attack by Spider on plant: Orange at grid (6,0)
+Insect Log: Day 3: Pest attack by Caterpillar on plant: Orange at grid (4,1)
+Insect Log: Day 3: Beneficial insect Butterfly found near plant: Orange at grid (0,4)
+Day Log: Day 3 simulation completed.
