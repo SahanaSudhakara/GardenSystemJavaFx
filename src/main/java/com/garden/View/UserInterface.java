@@ -47,8 +47,7 @@ public class UserInterface extends Application{
 
     @Override
     public void start(Stage primaryStage) {
-        gardenController = new GardenController();
-        pestControl = new PestControl();
+
         random = new Random();
 
         VBox root = new VBox();
@@ -204,6 +203,9 @@ public class UserInterface extends Application{
         primaryStage.setTitle("Automated Gardening System");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        pestControl = new PestControl(gardenGrid);
+        gardenController = new GardenController(pestControl);
 
         startAnimation();
     }
@@ -501,6 +503,7 @@ public class UserInterface extends Application{
     private void simulateDay() {
         gardenController.simulateDay();
         pestControl.managePests(gardenController.getPlants(), gardenController.getInsects(), gardenController.getLogger(), gardenController.getDay());
+
         updateLog();
         updateGardenGrid();
         updateWeatherImage();

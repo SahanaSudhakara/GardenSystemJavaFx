@@ -20,13 +20,14 @@ public class GardenController {
     private int dayCount;
     private static final String[] WEATHER_TYPES = {"Sunny", "Rainy", "Cold"};
 
-    public GardenController() {
+    public GardenController(PestControl pestControl) {
         plants = new ArrayList<>();
         insects = new ArrayList<>();
         wateringSystem = new WateringSystem();
         heatingSystem = new HeatingSystem();
-        pestControl = new PestControl();
+      //  pestControl = new PestControl();
         logger = new Logger();
+        this.pestControl=pestControl;
         dayCount = 0;
     }
 

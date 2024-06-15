@@ -6,17 +6,32 @@ import com.garden.Model.BeneficialInsect;
 import com.garden.Model.Insect;
 import com.garden.Model.Pest;
 import com.garden.Model.Plant;
+import javafx.animation.PauseTransition;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
 public class PestControl {
     private static final String[] PESTS = {"Spider", "Caterpillar"};
     private static final String[] BENEFICIAL_INSECTS = {"Beetle", "Butterfly"};
+    private final GridPane gridPane;
     private List<Cleaner> cleaners;
 
-    public PestControl() {
-        cleaners = List.of(new Cleaner(), new Cleaner(), new Cleaner()); // Initialize with 3 cleaners
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    private   ImageView imageView;
+
+    public PestControl(GridPane gridPane) {
+        cleaners = List.of(new Cleaner(), new Cleaner(), new Cleaner()); 
+        // Initialize with 3 cleaners
+        this.gridPane=gridPane;
     }
 
     public List<Cleaner> getCleaners() {
@@ -49,6 +64,7 @@ public class PestControl {
                 Cleaner availableCleaner = cleaners.stream().filter(cleaner -> !cleaner.isBusy()).findFirst().orElse(null);
                 if (availableCleaner != null) {
                     availableCleaner.visitPlant(plant);
+                    handleCleanerGif(availableCleaner,plant.getRow(),plant.getCol());
                     logger.addCleanerLogEntry("Day " + dayCount + ": Cleaner visiting plant: " + plant.getName());
                 }
             }
@@ -58,6 +74,7 @@ public class PestControl {
         for (Cleaner cleaner : cleaners) {
             if (cleaner.isBusy()) {
                 cleaner.finishVisit();
+
             }
         }
     }
@@ -70,4 +87,18 @@ public class PestControl {
         }
         return false;
     }
+
+    private void handleCleanerGif(Cleaner cleaner, int row, int col) {
+        // Add GIF ImageView to the grid at the cleaner's position
+        Image cleanerImage = new Image(new File("src/main/java/com/garden/images/cleaner.gif").toURI().toString());
+        ImageView imageView = new ImageView(cleanerImage);
+        imageView.setFitWidth(50);
+        imageView.setFitHeight(50);
+        gridPane.add(imageView, col, row);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(10)); // Adjust the duration as needed
+        pause.setOnFinished(event -> gridPane.getChildren().remove(imageView));
+        pause.play();
+    }
+
 }
