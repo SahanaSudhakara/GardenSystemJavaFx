@@ -5,7 +5,7 @@ import com.garden.Model.Plant;
 import java.util.List;
 
 public class HeatingSystem {
-    public void heatPlants(List<Plant> plants) {
+    public void increaseTemperature(List<Plant> plants) {
         for (Plant plant : plants) {
             if (!plant.isDead()) {
                 plant.heat();
@@ -13,7 +13,7 @@ public class HeatingSystem {
         }
     }
 
-    public void coolPlants(List<Plant> plants) {
+    public void decreaseTemperature(List<Plant> plants) {
         for (Plant plant : plants) {
             if (!plant.isDead()) {
                 plant.cool();

@@ -25,21 +25,20 @@ public class GardenController {
         insects = new ArrayList<>();
         wateringSystem = new WateringSystem();
         heatingSystem = new HeatingSystem();
-      //  pestControl = new PestControl();
         logger = new Logger();
-        this.pestControl=pestControl;
+        this.pestControl = pestControl;
         dayCount = 0;
     }
 
     public void addPlant(Plant plant) {
         plants.add(plant);
-        logger.addDayLogEntry("Added plant: " + plant.getName());
+        logger.addDayLogEntry("Added plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ")");
     }
 
     public void simulateDay() {
         dayCount++;
         logger.addDayLogEntry("Day " + dayCount + " simulation started.");
-        String weather =getCurrentWeather();
+        String weather = getCurrentWeather();
         logger.addDayLogEntry("Weather: " + weather);
 
         for (Plant plant : plants) {
@@ -48,22 +47,22 @@ public class GardenController {
                 switch (weather) {
                     case "Rainy":
                         wateringSystem.waterPlants(plants, 10); // Water less if rainy
-                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " with 10 units of water (rainy day)");
+                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") with 10 units of water (rainy day)");
                         break;
                     case "Cold":
-                        heatingSystem.heatPlants(plants);
-                        logger.addHeatingLogEntry("Day " + dayCount + ": Heating plant: " + plant.getName());
-                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " with 20 units of water");
+                        heatingSystem.increaseTemperature(plants);
+                        logger.addHeatingLogEntry("Day " + dayCount + ": Heating plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ")");
+                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") with 20 units of water");
                         break;
                     case "Sunny":
-                        heatingSystem.coolPlants(plants);
-                        logger.addHeatingLogEntry("Day " + dayCount + ": Cooling plant: " + plant.getName() + " (sunny day)");
+                        heatingSystem.decreaseTemperature(plants);
+                        logger.addHeatingLogEntry("Day " + dayCount + ": Cooling plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") (sunny day)");
                         wateringSystem.waterPlants(plants, 20);
-                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " with 20 units of water (sunny day)");
+                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") with 20 units of water (sunny day)");
                         break;
                     default:
                         wateringSystem.waterPlants(plants, 20);
-                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " with 20 units of water");
+                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") with 20 units of water");
                 }
             }
         }
@@ -85,12 +84,13 @@ public class GardenController {
     public Logger getLogger() {
         return logger;
     }
+
     public int getDay() {
         return dayCount;
     }
+
     public String getCurrentWeather() {
         Random random = new Random();
         return WEATHER_TYPES[random.nextInt(WEATHER_TYPES.length)];
     }
-
 }

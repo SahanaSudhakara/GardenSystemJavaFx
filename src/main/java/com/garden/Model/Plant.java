@@ -55,6 +55,7 @@ public abstract class Plant {
         }
         if (daysToLive <= 0) {
             isDead = true;
+            pestAttacks=0;
         }
     }
 

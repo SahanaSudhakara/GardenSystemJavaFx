@@ -6,6 +6,8 @@ import com.garden.Model.*;
 import com.garden.Controller.PestControl;
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,7 +24,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class UserInterface extends Application{
     protected GridPane gardenGrid;
@@ -143,7 +147,7 @@ public class UserInterface extends Application{
         progressBox.getChildren().addAll(temperatureProgressBar, temperatureProgressLabel, waterProgressBar, waterProgressLabel);
 
         // GIF ImageView
-        Image image = new Image(new File("src/main/java/com/garden/images/cleaner.gif").toURI().toString());
+        Image image = new Image(new File("src/main/java/com/garden/images/farmer.gif").toURI().toString());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
@@ -199,9 +203,10 @@ public class UserInterface extends Application{
 
         root.getChildren().addAll(plantBox, mainBox, buttonBox, logAccordion);
 
-        Scene scene = new Scene(root, 1200, 800);
+        Scene scene = new Scene(root);
         primaryStage.setTitle("Automated Gardening System");
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true); // Make the scene full screen
         primaryStage.show();
 
         pestControl = new PestControl(gardenGrid);
@@ -263,31 +268,46 @@ public class UserInterface extends Application{
     private void updateDirectory() {
         directoryListView.getItems().clear();
         directoryListView.getItems().add("Plants:");
-        directoryListView.getItems().add("  - Tomato: " + gardenController.getPlants().stream().filter(p -> p.getName().equals("Tomato")).count());
-        directoryListView.getItems().add("  - Orange: " + gardenController.getPlants().stream().filter(p -> p.getName().equals("Orange")).count());
-        directoryListView.getItems().add("  - Sunflower: " + gardenController.getPlants().stream().filter(p -> p.getName().equals("Sunflower")).count());
+
+        long tomatoCount = gardenController.getPlants().stream().filter(p -> p.getName().equals("Tomato")).count();
+        long orangeCount = gardenController.getPlants().stream().filter(p -> p.getName().equals("Orange")).count();
+        long sunflowerCount = gardenController.getPlants().stream().filter(p -> p.getName().equals("Sunflower")).count();
+
+        directoryListView.getItems().add("  - Tomato: " + tomatoCount);
+        directoryListView.getItems().add("  - Orange: " + orangeCount);
+        directoryListView.getItems().add("  - Sunflower: " + sunflowerCount);
+
         directoryListView.getItems().add("Good Insects:");
-        directoryListView.getItems().add("  - Beetle: " + gardenController.getInsects().stream().filter(i -> i.getName().equals("Beetle")).count());
-        directoryListView.getItems().add("  - Butterfly: " + gardenController.getInsects().stream().filter(i -> i.getName().equals("Butterfly")).count());
+
+        long beetleCount = gardenController.getInsects().stream().filter(i -> i.getName().equals("Beetle")).count();
+        long butterflyCount = gardenController.getInsects().stream().filter(i -> i.getName().equals("Butterfly")).count();
+
+        directoryListView.getItems().add("  - Beetle: " + beetleCount);
+        directoryListView.getItems().add("  - Butterfly: " + butterflyCount);
+
         directoryListView.getItems().add("Pests:");
-        directoryListView.getItems().add("  - Spider: " + gardenController.getInsects().stream().filter(i -> i.getName().equals("Spider")).count());
-        directoryListView.getItems().add("  - Caterpillar: " + gardenController.getInsects().stream().filter(i -> i.getName().equals("Caterpillar")).count());
-        directoryListView.getItems().add("Cleaners:");
-        directoryListView.getItems().add("  - Available: " + pestControl.getCleaners().stream().filter(c -> !c.isBusy()).count());
-        directoryListView.getItems().add("  - Busy: " + pestControl.getCleaners().stream().filter(Cleaner::isBusy).count());
+
+        long spiderCount = gardenController.getInsects().stream().filter(i -> i.getName().equals("Spider")).count();
+        long caterpillarCount = gardenController.getInsects().stream().filter(i -> i.getName().equals("Caterpillar")).count();
+
+        directoryListView.getItems().add("  - Spider: " + spiderCount);
+        directoryListView.getItems().add("  - Caterpillar: " + caterpillarCount);
 
         // Update Plant Table
         plantTable.getItems().clear();
+        Map<String, Long> plantCounts = gardenController.getPlants().stream()
+                .collect(Collectors.groupingBy(Plant::getName, Collectors.counting()));
         for (Plant plant : gardenController.getPlants()) {
             PlantDetails details = new PlantDetails(
                     plant.getName(),
-                    (int) gardenController.getPlants().stream().filter(p -> p.getName().equals(plant.getName())).count(),
+                    plantCounts.getOrDefault(plant.getName(), 0L).intValue(),
                     plant.getDaysToLive(),
                     plant.getPestAttacks()
             );
             plantTable.getItems().add(details);
         }
     }
+
 
     private VBox createPlantBox() {
         VBox plantBox = new VBox();
@@ -484,15 +504,38 @@ public class UserInterface extends Application{
         addLogEntries(cleanerLogList, gardenController.getLogger().getCleanerLogEntries(), Color.PURPLE);
     }
 
+
     private void addLogEntries(ListView<TextFlow> logList, List<String> logEntries, Color color) {
         for (String entry : logEntries) {
-            Text text = new Text(entry + "\n");
-            text.setFill(color);
-            text.setFont(Font.font("Arial", FontWeight.BOLD, 12));  // Increase font size for better readability
-            TextFlow textFlow = new TextFlow(text);
-            logList.getItems().add(textFlow);
+            String[] parts = entry.split(": ");
+            if (parts.length > 1) {
+                String timestamp = parts[0];
+                String message = parts[1];
+
+                Text timestampText = new Text(timestamp + ": ");
+                timestampText.setFill(Color.GRAY);
+                timestampText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+                Text messageText = new Text(message + "\n");
+                messageText.setFill(color);
+                messageText.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+
+                TextFlow textFlow = new TextFlow(timestampText, messageText);
+                textFlow.setPadding(new Insets(5, 10, 5, 10));
+                textFlow.setStyle("-fx-background-color: #F0F0F0; -fx-background-radius: 5; -fx-border-color: #D0D0D0; -fx-border-radius: 5; -fx-border-width: 1;");
+                logList.getItems().add(textFlow);
+            } else {
+                Text text = new Text(entry + "\n");
+                text.setFill(color);
+                text.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+                TextFlow textFlow = new TextFlow(text);
+                textFlow.setPadding(new Insets(5, 10, 5, 10));
+                textFlow.setStyle("-fx-background-color: #F0F0F0; -fx-background-radius: 5; -fx-border-color: #D0D0D0; -fx-border-radius: 5; -fx-border-width: 1;");
+                logList.getItems().add(textFlow);
+            }
         }
     }
+
 
     private void startSimulation() {
         simulationTimeline = new Timeline(new KeyFrame(Duration.seconds(4), e -> simulateDay()));
@@ -514,19 +557,10 @@ public class UserInterface extends Application{
             plant.adjustLifespanForWeather(currentWeather);
         }
 
-        if (gardenController.getPlants().stream().allMatch(Plant::isDead)) {
-            simulationTimeline.stop();
-            showPopup("All plants have died. Plant more to continue.");
-        }
     }
 
-    private void showPopup(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Game Over");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
+
 
     private void startAnimation() {
         AnimationTimer timer = new AnimationTimer() {
