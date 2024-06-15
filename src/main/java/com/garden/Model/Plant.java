@@ -1,5 +1,4 @@
 package com.garden.Model;
-
 public abstract class Plant {
     private String name;
     private int daysToLive;
@@ -50,17 +49,23 @@ public abstract class Plant {
     }
 
     public void decrementDaysToLive() {
-        if (daysToLive > 0) {
+        if (!isDead && daysToLive > 0) {
             daysToLive--;
         }
         if (daysToLive <= 0) {
             isDead = true;
-            pestAttacks=0;
         }
     }
 
     public void incrementPestAttacks() {
+        if (isDead) return;  // If the plant is already dead, do nothing
         pestAttacks++;
+        if (pestAttacks == 9) { // Reduce lifespan by 1 after 9 pest attacks
+            daysToLive--;
+            if (daysToLive <= 0) {
+                isDead = true;
+            }
+        }
         if (pestAttacks >= 12) {  // Plant dies after 12 pest attacks
             isDead = true;
         }
@@ -83,7 +88,7 @@ public abstract class Plant {
                     // No additional days for sunny weather
                     break;
                 case "Rainy":
-                    daysToLive = Math.min(daysToLive + 1, maxLifespan);  // Rainy days are beneficial, increase lifespan by 1, up to maxLifespan
+                    daysToLive++;  // Rainy days are beneficial, increase lifespan by 1, up to maxLifespan
                     break;
                 case "Cold":
                     daysToLive -= 2;  // Cold days are harmful, decrease lifespan by 2
@@ -97,13 +102,13 @@ public abstract class Plant {
 
     public void heat() {
         if (!isDead) {
-            daysToLive = Math.min(daysToLive + 1, maxLifespan);
+            daysToLive++;
         }
     }
 
     public void cool() {
         if (!isDead) {
-            daysToLive = Math.min(daysToLive + 1, maxLifespan);
+            daysToLive ++;
         }
     }
 }
