@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 public class GardenController {
     private List<Plant> plants;
     private List<Insect> insects;
@@ -25,14 +26,14 @@ public class GardenController {
         insects = new ArrayList<>();
         wateringSystem = new WateringSystem();
         heatingSystem = new HeatingSystem();
-        logger = new Logger();
         this.pestControl = pestControl;
+        logger = new Logger();
         dayCount = 0;
     }
 
     public void addPlant(Plant plant) {
         plants.add(plant);
-        logger.addDayLogEntry("Added plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ")");
+        logger.addDayLogEntry("Added plant: " + plant.getName() + " at grid (" + plant.getRow() + "," + plant.getCol() + ")");
     }
 
     public void simulateDay() {
@@ -47,22 +48,23 @@ public class GardenController {
                 switch (weather) {
                     case "Rainy":
                         wateringSystem.waterPlants(plants, 10); // Water less if rainy
-                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") with 10 units of water (rainy day)");
+                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at grid (" + plant.getRow() + "," + plant.getCol() + ") (rainy day)");
                         break;
                     case "Cold":
                         heatingSystem.increaseTemperature(plants);
-                        logger.addHeatingLogEntry("Day " + dayCount + ": Heating plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ")");
-                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") with 20 units of water");
+                        logger.addHeatingLogEntry("Day " + dayCount + ": Heating plant: " + plant.getName() + " at grid (" + plant.getRow() + "," + plant.getCol() + ")");
+                        wateringSystem.waterPlants(plants, 20);
+                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at grid (" + plant.getRow() + "," + plant.getCol() + ")");
                         break;
                     case "Sunny":
                         heatingSystem.decreaseTemperature(plants);
-                        logger.addHeatingLogEntry("Day " + dayCount + ": Cooling plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") (sunny day)");
+                        logger.addHeatingLogEntry("Day " + dayCount + ": Cooling plant: " + plant.getName() + " at grid (" + plant.getRow() + "," + plant.getCol() + ") (sunny day)");
                         wateringSystem.waterPlants(plants, 20);
-                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") with 20 units of water (sunny day)");
+                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at grid (" + plant.getRow() + "," + plant.getCol() + ") (sunny day)");
                         break;
                     default:
                         wateringSystem.waterPlants(plants, 20);
-                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at (" + plant.getRow() + "," + plant.getCol() + ") with 20 units of water");
+                        logger.addWateringLogEntry("Day " + dayCount + ": Watering plant: " + plant.getName() + " at grid (" + plant.getRow() + "," + plant.getCol() + ")");
                 }
             }
         }
